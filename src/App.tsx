@@ -39,6 +39,7 @@ import { MobileBottomBar } from './components/MobileBottomBar';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { WishlistDrawer } from './components/WishlistDrawer';
+import { ShadeAIAdvisor } from './components/ShadeAIAdvisor';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ar');
@@ -191,6 +192,12 @@ export default function App() {
     });
     const name = lang === 'en' ? shade.nameEn : shade.nameAr;
     showToast(lang === 'ar' ? `أضيفت ${name} إلى السلة` : `Added ${name} to cart`);
+  };
+
+  // وصلة المساعد الذكي: المساعد بيبعت id، ونحوله لـ Shade كامل
+  const handleAIAddToCart = (shadeId: number) => {
+    const shade = shades.find((s) => s.id === shadeId);
+    if (shade) handleAddToCart(shade);
   };
 
   const handleUpdateQty = (shadeId: number, delta: number) => {
@@ -351,34 +358,16 @@ export default function App() {
         onShareFavoritesWhatsApp={handleShareFavoritesWhatsApp}
       />
 
-      {/* Catalog */}
       <CatalogSection lang={lang} />
-
-      {/* Bundles & Deals */}
       <BundlesSection lang={lang} />
-
-      {/* Luxury Pillars / Care */}
       <PerksCareSection lang={lang} />
-
-      {/* Active Ingredients */}
       <IngredientsSection lang={lang} />
-
-      {/* Hair Care Tips */}
       <CareTipsSection lang={lang} />
-
-      {/* How to Use Guide */}
       <HowToUseSection lang={lang} />
-
-      {/* Customer Reviews */}
       <ReviewsSection lang={lang} />
-
-      {/* FAQ */}
       <FaqSection lang={lang} />
-
-      {/* Instagram Lookbook */}
       <InstagramSection lang={lang} />
 
-      {/* Footer */}
       <Footer lang={lang} onOpenAdmin={() => setIsAdminOpen(true)} />
 
       <ShadeModal
@@ -439,6 +428,9 @@ export default function App() {
       />
 
       <FloatingWhatsApp lang={lang} />
+
+      {/* مساعد الذكاء الاصطناعي - اختيار الصبغة */}
+      <ShadeAIAdvisor lang={lang} onAddToCart={handleAIAddToCart} />
 
       {toastMessage && (
         <div className="fixed top-20 start-1/2 -translate-x-1/2 z-50 bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
