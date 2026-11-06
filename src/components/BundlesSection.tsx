@@ -69,11 +69,12 @@ export const BundlesSection: React.FC<BundlesSectionProps> = ({ lang }) => {
           </div>
 
           {/* Card 2: Featured Hero Bundle - 4 Boxes Free Delivery */}
-          <div className="relative rounded-2xl p-6 sm:p-8 pt-10 bg-gradient-to-b from-[var(--bg2)] via-[var(--bg2)] to-[var(--gold)]/10 border-2 border-[var(--gold)] shadow-xl shadow-[var(--gold)]/10 flex flex-col justify-between transform md:-translate-y-2 overflow-visible">
-            {/* Best Seller Ribbon - FIXED: centered with flex, no translate cut-off */}
-            <div className="absolute -top-3.5 inset-x-0 flex justify-center pointer-events-none">
-              <span className="px-4 py-1.5 rounded-full bg-[var(--gold)] text-[var(--on-gold)] text-[11px] sm:text-xs font-bold whitespace-nowrap shadow-md max-w-[92%] text-center leading-none">
-                {isEn ? '⭐ Most Popular Offer' : '⭐ العرض الأكثر طلباً'}
+          <div className="relative rounded-2xl p-6 sm:p-8 bg-gradient-to-b from-[var(--bg2)] via-[var(--bg2)] to-[var(--gold)]/10 border-2 border-[var(--gold)] shadow-xl shadow-[var(--gold)]/10 flex flex-col justify-between md:-translate-y-2">
+            {/* Best Seller Badge - جوات الكرت، مش absolute، فمستحيل تنقص */}
+            <div className="flex justify-center mb-4">
+              <span dir="rtl" className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text-[13px] font-bold shadow-md text-center leading-normal">
+                <span aria-hidden="true">⭐</span>
+                <span>{isEn ? 'Most Popular Offer' : 'العرض الأكثر طلباً'}</span>
               </span>
             </div>
 
