@@ -24,32 +24,40 @@ export const CATEGORIES: Category[] = [
   { id: 3, nameAr: 'النحاسي والأحمر', nameEn: 'Copper & Red' },
 ];
 
+// الترتيب الرسمي حسب الكتالوج - من الصفحة الأولى للثانية، عمود يسار ثم يمين
+export const CATALOG_ORDER = [
+  '1.0', '3.0', '4.0', '5.0', '6.0', '7.0', '8.0',
+  '10.0', '0.1', '0.2', '1.1', '7.1', '8.1', '7.11',
+  '8.11', '0.02', '7.33', '8.3', '6.7', '7.7',
+  '8.73', '8.37', '7.66', '5.65', '8.45',
+];
+
 export const SHADES: Shade[] = [
   { id: 0, code: '1.0', nameAr: 'أسود', nameEn: 'Black', hex: '#121010', image: '/assets/aistudio/SPACE_12_1.0.png', categoryId: 0, badge: 'best_seller', descAr: 'أسود عميق وكثيف بلمعان كلاسيكي فاخر وتغطية كاملة.', descEn: 'Deep intense black with classic shine and full coverage.' },
-  { id: 1, code: '1.1', nameAr: 'أسود مزرق', nameEn: 'Blue Black', hex: '#10141F', image: '/assets/aistudio/SPACE_15_1.1.png', categoryId: 0, descAr: 'أسود بلمسة زرقاء باردة يعطي عمق ولمعان مميز تحت الضوء.', descEn: 'Blue-black with a cool reflective shine and mysterious depth.' },
-  { id: 2, code: '3.0', nameAr: 'بني غامق', nameEn: 'Dark Brown', hex: '#1E120C', image: '/assets/aistudio/SPACE_09_3.0.png', categoryId: 0, descAr: 'بني غامق غني وطبيعي، الأكثر طلباً للإطلالة اليومية الأنيقة.', descEn: 'Rich dark brown, natural and elegant for everyday wear.' },
-  { id: 3, code: '4.0', nameAr: 'بني', nameEn: 'Brown', hex: '#2B1A12', image: '/assets/aistudio/SPACE_07_4.0.png', categoryId: 0, badge: 'best_seller', descAr: 'الدرجة الأيقونية بلونها الدافئ ولمعان زيت الأرجان.', descEn: 'Iconic warm brown with argan-infused brilliance.' },
-  { id: 4, code: '5.0', nameAr: 'بني فاتح', nameEn: 'Light Brown', hex: '#3D2A1A', image: '/assets/aistudio/SPACE_16_5.0.png', categoryId: 0, descAr: 'بني فاتح ناعم ومشرق يمنح مظهراً حيوياً ومفعماً بالشباب.', descEn: 'Soft light brown adding vitality and youthful glow.' },
-  { id: 5, code: '6.7', nameAr: 'بني شوكولاتة', nameEn: 'Chocolate Coffee', hex: '#221416', image: '/assets/aistudio/SPACE_23_6.7.png', categoryId: 0, descAr: 'بني شوكولاتة داكن وفاخر بلمسة قهوة غنية وبريق جذاب.', descEn: 'Dark chocolate coffee with rich depth and glossy finish.' },
-  { id: 6, code: '7.7', nameAr: 'بني لامع', nameEn: 'Shining Coffee', hex: '#2E1A12', image: '/assets/aistudio/SPACE_01_7.7.png', categoryId: 0, badge: 'new', descAr: 'بني قهوة لامع يمنح الشعر بريقاً صحياً وإشراقة واضحة.', descEn: 'Shining coffee brown for healthy glossy hair.' },
-  { id: 7, code: '7.33', nameAr: 'قشرة البندق', nameEn: 'Nutshell', hex: '#3A2818', image: '/assets/aistudio/SPACE_02_7.3.png', categoryId: 0, descAr: 'لون قشرة البندق الدافئ، مزيج طبيعي بين البني والذهبي.', descEn: 'Warm nutshell tone blending brown and golden hues.' },
-  { id: 8, code: '7.66', nameAr: 'أحمر باذنجاني', nameEn: 'Aubergine Red', hex: '#2A1218', image: '/assets/aistudio/SPACE_22_3.66.png', categoryId: 3, badge: 'new', descAr: 'أحمر باذنجاني جريء بلمسة بنفسجية راقية وحضور استثنائي.', descEn: 'Bold aubergine red with elegant violet undertones.' },
-  { id: 9, code: '5.65', nameAr: 'أحمر فراولة', nameEn: 'Strawberry Red', hex: '#6E1A22', image: '/assets/aistudio/SPACE_10_5.65.png', categoryId: 3, descAr: 'أحمر فراولة نابض بالحيوية يعكس قوة الشخصية وحب التميز.', descEn: 'Vibrant strawberry red full of energy and personality.' },
-  { id: 10, code: '8.73', nameAr: 'كراميل', nameEn: 'Caramel', hex: '#8A5A33', image: '/assets/aistudio/SPACE_05_8.73.png', categoryId: 1, badge: 'best_seller', descAr: 'درجة الكراميل الغنية بحلاوتها ولمعانها الذهبي الخفيف.', descEn: 'Irresistible creamy caramel with warm golden facets.' },
-  { id: 11, code: '8.3', nameAr: 'رغوة العسل', nameEn: 'Honey Foam', hex: '#7A5A33', image: '/assets/aistudio/SPACE_13_8.3.png', categoryId: 1, descAr: 'لون رغوة العسل الدافئ، إشراقة ذهبية ناعمة وطبيعية.', descEn: 'Warm honey foam with soft golden radiance.' },
-  { id: 12, code: '8.45', nameAr: 'نحاسي قرفة', nameEn: 'Cinnamon Copper', hex: '#6E3526', image: '/assets/aistudio/SPACE_04_8.45.png', categoryId: 3, descAr: 'نحاسي قرفة دافئ يمزج بين دفء النحاس وبريق القرفة.', descEn: 'Warm cinnamon copper blending copper fire and spice.' },
-  { id: 13, code: '8.37', nameAr: 'ساهارا', nameEn: 'Sahara', hex: '#6E4A2A', image: '/assets/aistudio/SPACE_11_8.37.png', categoryId: 1, descAr: 'لون صحراء دافئ مستوحى من رمال الصحراء الذهبية.', descEn: 'Warm sahara tone inspired by golden desert sands.' },
-  { id: 14, code: '6.0', nameAr: 'أشقر غامق', nameEn: 'Dark Blonde', hex: '#4A3220', image: '/assets/aistudio/SPACE_25_6.0.png', categoryId: 2, descAr: 'درجة شقراء دافئة وراقية تشكل جسراً مثالياً بين البني والأشقر.', descEn: 'Sophisticated dark blonde bridging brown and blonde.' },
-  { id: 15, code: '7.0', nameAr: 'أشقر', nameEn: 'Blonde', hex: '#5A4030', image: '/assets/aistudio/SPACE_17_7.0.png', categoryId: 2, badge: 'best_seller', descAr: 'أشقر نقي وكلاسيكي من أكثر الدرجات المفضلة لدى صالونات التجميل.', descEn: 'Pure radiant blonde, a timeless salon-favorite.' },
-  { id: 16, code: '8.0', nameAr: 'أشقر فاتح', nameEn: 'Light Blonde', hex: '#6B4F35', image: '/assets/aistudio/SPACE_24_8.0.png', categoryId: 2, descAr: 'أشقر فاتح مفعم بالنعومة والرقة مع تغطية متكاملة.', descEn: 'Delicate light blonde with airy lightness.' },
-  { id: 17, code: '10.0', nameAr: 'أشقر فاتح جداً', nameEn: 'Lightest Blonde', hex: '#C9B18A', image: '/assets/aistudio/SPACE_19_10.0.png', categoryId: 2, descAr: 'أشقر فاتح جداً بإشراقة شمسية لإطلالة مشرقة وجريئة.', descEn: 'Lightest blonde with sun-drenched luminosity.' },
-  { id: 18, code: '0.1', nameAr: 'أشقر بلاتيني', nameEn: 'Platinum Blonde', hex: '#8A7A68', image: '/assets/aistudio/SPACE_08_0.1.png', categoryId: 2, descAr: 'أشقر بلاتيني بارد وأنيق يحيّد درجات النحاس غير المرغوبة.', descEn: 'Chic platinum blonde neutralizing brassiness.' },
-  { id: 19, code: '0.2', nameAr: 'أشقر بيبي', nameEn: 'Baby Blonde', hex: '#D9C98A', image: '/assets/aistudio/SPACE_14_0.2.png', categoryId: 2, badge: 'new', descAr: 'أشقر بيبي ناعم وفاتح كشعر الأطفال بلمسة طبيعية مشرقة.', descEn: 'Soft baby blonde with natural bright glow.' },
-  { id: 20, code: '0.02', nameAr: 'أبيض فضي', nameEn: 'Silver White', hex: '#2A2A2E', image: '/assets/aistudio/SPACE_18_0.02.png', categoryId: 2, descAr: 'أبيض فضي عصري بلمعان معدني فريد لإطلالة جريئة.', descEn: 'Modern silver white with unique metallic gleam.' },
-  { id: 21, code: '7.1', nameAr: 'أشقر رمادي', nameEn: 'Medium Ash Blonde', hex: '#4F4438', image: '/assets/aistudio/SPACE_06_7.1.png', categoryId: 2, descAr: 'أشقر رمادي بارد وأنيق يحيّد درجات النحاس غير المرغوبة.', descEn: 'Cool medium ash blonde neutralizing unwanted warmth.' },
-  { id: 22, code: '8.1', nameAr: 'أشقر فاتح رمادي', nameEn: 'Light Ash Blonde', hex: '#5C5040', image: '/assets/aistudio/SPACE_21_8.1.png', categoryId: 2, descAr: 'أشقر فاتح رمادي بلمسة باردة عصرية وناعمة.', descEn: 'Light ash blonde with cool modern softness.' },
-  { id: 23, code: '7.11', nameAr: 'أشقر رمادي مكثف', nameEn: 'Intense Ash Blonde', hex: '#38322E', image: '/assets/aistudio/SPACE_03_7.11.png', categoryId: 2, badge: 'best_seller', descAr: 'أشقر رمادي مكثف يمنح تغطية قوية ولمسة رمادية واضحة.', descEn: 'Intense ash blonde for strong coverage and cool tone.' },
-  { id: 24, code: '8.11', nameAr: 'أشقر فاتح رمادي مكثف', nameEn: 'Intense Ash Light Blonde', hex: '#2F2A26', image: '/assets/aistudio/SPACE_20_8.11.png', categoryId: 2, badge: 'out_of_stock', descAr: 'أشقر فاتح رمادي مكثف بتركيز عالي لإطلالة رمادية نقية.', descEn: 'Intense ash light blonde for pure cool perfection.' },
+  { id: 1, code: '3.0', nameAr: 'بني غامق', nameEn: 'Dark Brown', hex: '#1E120C', image: '/assets/aistudio/SPACE_09_3.0.png', categoryId: 0, descAr: 'بني غامق غني وطبيعي، الأكثر طلباً للإطلالة اليومية الأنيقة.', descEn: 'Rich dark brown, natural and elegant for everyday wear.' },
+  { id: 2, code: '4.0', nameAr: 'بني', nameEn: 'Brown', hex: '#2B1A12', image: '/assets/aistudio/SPACE_07_4.0.png', categoryId: 0, badge: 'best_seller', descAr: 'الدرجة الأيقونية بلونها الدافئ ولمعان زيت الأرجان.', descEn: 'Iconic warm brown with argan-infused brilliance.' },
+  { id: 3, code: '5.0', nameAr: 'بني فاتح', nameEn: 'Light Brown', hex: '#3D2A1A', image: '/assets/aistudio/SPACE_16_5.0.png', categoryId: 0, descAr: 'بني فاتح ناعم ومشرق يمنح مظهراً حيوياً ومفعماً بالشباب.', descEn: 'Soft light brown adding vitality and youthful glow.' },
+  { id: 4, code: '6.0', nameAr: 'أشقر غامق', nameEn: 'Dark Blonde', hex: '#4A3220', image: '/assets/aistudio/SPACE_25_6.0.png', categoryId: 2, descAr: 'درجة شقراء دافئة وراقية تشكل جسراً مثالياً بين البني والأشقر.', descEn: 'Sophisticated dark blonde bridging brown and blonde.' },
+  { id: 5, code: '7.0', nameAr: 'أشقر', nameEn: 'Blonde', hex: '#5A4030', image: '/assets/aistudio/SPACE_17_7.0.png', categoryId: 2, badge: 'best_seller', descAr: 'أشقر نقي وكلاسيكي من أكثر الدرجات المفضلة لدى صالونات التجميل.', descEn: 'Pure radiant blonde, a timeless salon-favorite.' },
+  { id: 6, code: '8.0', nameAr: 'أشقر فاتح', nameEn: 'Light Blonde', hex: '#6B4F35', image: '/assets/aistudio/SPACE_24_8.0.png', categoryId: 2, descAr: 'أشقر فاتح مفعم بالنعومة والرقة مع تغطية متكاملة.', descEn: 'Delicate light blonde with airy lightness.' },
+  { id: 7, code: '10.0', nameAr: 'أشقر فاتح جداً', nameEn: 'Lightest Blonde', hex: '#C9B18A', image: '/assets/aistudio/SPACE_19_10.0.png', categoryId: 2, descAr: 'أشقر فاتح جداً بإشراقة شمسية لإطلالة مشرقة وجريئة.', descEn: 'Lightest blonde with sun-drenched luminosity.' },
+  { id: 8, code: '0.1', nameAr: 'أشقر بلاتيني', nameEn: 'Platinum Blonde', hex: '#8A7A68', image: '/assets/aistudio/SPACE_08_0.1.png', categoryId: 2, descAr: 'أشقر بلاتيني بارد وأنيق يحيّد درجات النحاس غير المرغوبة.', descEn: 'Chic platinum blonde neutralizing brassiness.' },
+  { id: 9, code: '0.2', nameAr: 'أشقر بيبي', nameEn: 'Baby Blonde', hex: '#D9C98A', image: '/assets/aistudio/SPACE_14_0.2.png', categoryId: 2, badge: 'new', descAr: 'أشقر بيبي ناعم وفاتح كشعر الأطفال بلمسة طبيعية مشرقة.', descEn: 'Soft baby blonde with natural bright glow.' },
+  { id: 10, code: '1.1', nameAr: 'أسود مزرق', nameEn: 'Blue Black', hex: '#10141F', image: '/assets/aistudio/SPACE_15_1.1.png', categoryId: 0, descAr: 'أسود بلمسة زرقاء باردة يعطي عمق ولمعان مميز تحت الضوء.', descEn: 'Blue-black with a cool reflective shine and mysterious depth.' },
+  { id: 11, code: '7.1', nameAr: 'أشقر رمادي', nameEn: 'Medium Ash Blonde', hex: '#4F4438', image: '/assets/aistudio/SPACE_06_7.1.png', categoryId: 2, descAr: 'أشقر رمادي بارد وأنيق يحيّد درجات النحاس غير المرغوبة.', descEn: 'Cool medium ash blonde neutralizing unwanted warmth.' },
+  { id: 12, code: '8.1', nameAr: 'أشقر فاتح رمادي', nameEn: 'Light Ash Blonde', hex: '#5C5040', image: '/assets/aistudio/SPACE_21_8.1.png', categoryId: 2, descAr: 'أشقر فاتح رمادي بلمسة باردة عصرية وناعمة.', descEn: 'Light ash blonde with cool modern softness.' },
+  { id: 13, code: '7.11', nameAr: 'أشقر رمادي مكثف', nameEn: 'Intense Ash Blonde', hex: '#38322E', image: '/assets/aistudio/SPACE_03_7.11.png', categoryId: 2, badge: 'best_seller', descAr: 'أشقر رمادي مكثف يمنح تغطية قوية ولمسة رمادية واضحة.', descEn: 'Intense ash blonde for strong coverage and cool tone.' },
+  { id: 14, code: '8.11', nameAr: 'أشقر فاتح رمادي مكثف', nameEn: 'Intense Ash Light Blonde', hex: '#2F2A26', image: '/assets/aistudio/SPACE_20_8.11.png', categoryId: 2, badge: 'out_of_stock', descAr: 'أشقر فاتح رمادي مكثف بتركيز عالي لإطلالة رمادية نقية.', descEn: 'Intense ash light blonde for pure cool perfection.' },
+  { id: 15, code: '0.02', nameAr: 'أبيض فضي', nameEn: 'Silver White', hex: '#2A2A2E', image: '/assets/aistudio/SPACE_18_0.02.png', categoryId: 2, descAr: 'أبيض فضي عصري بلمعان معدني فريد لإطلالة جريئة.', descEn: 'Modern silver white with unique metallic gleam.' },
+  { id: 16, code: '7.33', nameAr: 'قشرة البندق', nameEn: 'Nutshell', hex: '#3A2818', image: '/assets/aistudio/SPACE_02_7.3.png', categoryId: 0, descAr: 'لون قشرة البندق الدافئ، مزيج طبيعي بين البني والذهبي.', descEn: 'Warm nutshell tone blending brown and golden hues.' },
+  { id: 17, code: '8.3', nameAr: 'رغوة العسل', nameEn: 'Honey Foam', hex: '#7A5A33', image: '/assets/aistudio/SPACE_13_8.3.png', categoryId: 1, descAr: 'لون رغوة العسل الدافئ، إشراقة ذهبية ناعمة وطبيعية.', descEn: 'Warm honey foam with soft golden radiance.' },
+  { id: 18, code: '6.7', nameAr: 'بني شوكولاتة', nameEn: 'Chocolate Coffee', hex: '#221416', image: '/assets/aistudio/SPACE_23_6.7.png', categoryId: 0, descAr: 'بني شوكولاتة داكن وفاخر بلمسة قهوة غنية وبريق جذاب.', descEn: 'Dark chocolate coffee with rich depth and glossy finish.' },
+  { id: 19, code: '7.7', nameAr: 'بني لامع', nameEn: 'Shining Coffee', hex: '#2E1A12', image: '/assets/aistudio/SPACE_01_7.7.png', categoryId: 0, badge: 'new', descAr: 'بني قهوة لامع يمنح الشعر بريقاً صحياً وإشراقة واضحة.', descEn: 'Shining coffee brown for healthy glossy hair.' },
+  { id: 20, code: '8.73', nameAr: 'كراميل', nameEn: 'Caramel', hex: '#8A5A33', image: '/assets/aistudio/SPACE_05_8.73.png', categoryId: 1, badge: 'best_seller', descAr: 'درجة الكراميل الغنية بحلاوتها ولمعانها الذهبي الخفيف.', descEn: 'Irresistible creamy caramel with warm golden facets.' },
+  { id: 21, code: '8.37', nameAr: 'ساهارا', nameEn: 'Sahara', hex: '#6E4A2A', image: '/assets/aistudio/SPACE_11_8.37.png', categoryId: 1, descAr: 'لون صحراء دافئ مستوحى من رمال الصحراء الذهبية.', descEn: 'Warm sahara tone inspired by golden desert sands.' },
+  { id: 22, code: '7.66', nameAr: 'أحمر باذنجاني', nameEn: 'Aubergine Red', hex: '#2A1218', image: '/assets/aistudio/SPACE_22_3.66.png', categoryId: 3, badge: 'new', descAr: 'أحمر باذنجاني جريء بلمسة بنفسجية راقية وحضور استثنائي.', descEn: 'Bold aubergine red with elegant violet undertones.' },
+  { id: 23, code: '5.65', nameAr: 'أحمر فراولة', nameEn: 'Strawberry Red', hex: '#6E1A22', image: '/assets/aistudio/SPACE_10_5.65.png', categoryId: 3, descAr: 'أحمر فراولة نابض بالحيوية يعكس قوة الشخصية وحب التميز.', descEn: 'Vibrant strawberry red full of energy and personality.' },
+  { id: 24, code: '8.45', nameAr: 'نحاسي قرفة', nameEn: 'Cinnamon Copper', hex: '#6E3526', image: '/assets/aistudio/SPACE_04_8.45.png', categoryId: 3, descAr: 'نحاسي قرفة دافئ يمزج بين دفء النحاس وبريق القرفة.', descEn: 'Warm cinnamon copper blending copper fire and spice.' },
 ];
 
 export const BASE_PRICE = 2.5;
@@ -159,6 +167,12 @@ export function normalizeSearchTerm(term: string): string {
   return normalized.toLowerCase();
 }
 
+// ترتيب الكتالوج الرسمي - مش رقم الصورة
+export function getCatalogNo(s: Shade): number {
+  const idx = CATALOG_ORDER.indexOf(s.code);
+  return idx === -1 ? 999 + s.id : idx;
+}
+
 export function filterAndSortShades(shades: Shade[], searchQuery: string, categoryFilter: number | 'favorites', sortBy: 'default' | 'light_to_dark' | 'dark_to_light' | 'name', favorites: Record<number, boolean> = {}, lang: 'ar' | 'en' = 'ar'): Shade[] {
   const normQuery = normalizeSearchTerm(searchQuery);
   let filtered = shades.filter((s) => {
@@ -175,5 +189,6 @@ export function filterAndSortShades(shades: Shade[], searchQuery: string, catego
   if (sortBy === 'light_to_dark') filtered = [...filtered].sort((a, b) => getLightness(b.hex) - getLightness(a.hex));
   else if (sortBy === 'dark_to_light') filtered = [...filtered].sort((a, b) => getLightness(a.hex) - getLightness(b.hex));
   else if (sortBy === 'name') filtered = [...filtered].sort((a, b) => { const nameA = lang === 'en' ? a.nameEn : a.nameAr; const nameB = lang === 'en' ? b.nameEn : b.nameAr; return nameA.localeCompare(nameB, lang === 'en' ? 'en' : 'ar'); });
+  else filtered = [...filtered].sort((a, b) => getCatalogNo(a) - getCatalogNo(b));
   return filtered;
 }

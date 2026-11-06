@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Heart, ArrowLeftRight, Share2, Copy, Check, ShoppingBag } from 'lucide-react';
-import { Shade, CATEGORIES, isLightColor, BASE_PRICE, SHADES } from '../utils/storeLogic';
+import { Shade, CATEGORIES, BASE_PRICE, SHADES } from '../utils/storeLogic';
 import { Language, TRANSLATIONS } from '../utils/translations';
 
 interface ShadeModalProps {
@@ -39,7 +39,6 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
   const categoryName = category ? (isEn ? category.nameEn : category.nameAr) : '';
   const name = isEn ? shade.nameEn : shade.nameAr;
   const desc = isEn ? shade.descEn : shade.descAr;
-  const isLight = isLightColor(shade.hex);
   const isOut = shade.badge === 'out_of_stock';
 
   // Find 3 neighboring shades as similar shades
@@ -69,7 +68,12 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label={name}>
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto flex items-start sm:items-center justify-center p-3 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label={name}
+    >
       {/* Backdrop */}
       <div
         onClick={onClose}
@@ -77,41 +81,54 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-3xl rounded-2xl bg-[var(--bg)] border border-[var(--line)] shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 z-10">
+      <div className="relative w-full max-w-3xl rounded-2xl bg-[var(--bg)] border border-[var(--line)] shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 z-10 my-4 sm:my-0">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 start-4 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors"
+          className="absolute top-3 start-3 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors"
           aria-label={t.modal.close}
         >
           <X className="w-4 h-4" />
         </button>
 
-        {/* Left: Big Shade Image - NEW */}
+        {/* Left: Shade Image - FULL image, no cropping on mobile */}
         <div
-          className="relative min-h- md:min-h- flex items-end p-8 overflow-hidden"
+          className="relative w-full h- sm:h- md:h-auto md:min-h- flex items-center justify-center overflow-hidden"
           style={{ backgroundColor: shade.hex }}
         >
           {shade.image ? (
-            <img
-              src={shade.image}
-              alt={name}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            <>
+              {/* Blurred background fills any empty space */}
+              <img
+                src={shade.image}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60"
+              />
+              {/* Full image, never cropped */}
+              <img
+                src={shade.image}
+                alt={name}
+                className="relative z-[1] w-full h-full object-contain p-3 sm:p-4"
+              />
+            </>
           ) : null}
-          {/* تدرج خفيف من تحت عشان الرقم يبين */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-          <div className="relative z-10">
+
+          {/* Soft gradient so the number stays readable */}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-[2]" />
+
+          <div className="absolute bottom-4 start-5 z-[3]">
             <span
-              className="font-latin-display text-7xl sm:text-9xl font-light leading-none select-none text-white"
+              className="font-latin-display text-5xl sm:text-6xl font-light leading-none select-none text-white"
               style={{ textShadow: '0 3px 12px rgba(0,0,0,0.7)' }}
             >
               {shade.code}
             </span>
           </div>
-          {/* Badge جوا الصورة إذا موجود */}
+
+          {/* Badge */}
           {shade.badge && (
-            <div className="absolute top-4 end-4 z-10">
+            <div className="absolute top-3 end-3 z-[3]">
               <span
                 className={`px-2.5 py-1 rounded text- font-bold tracking-wider uppercase ${
                   shade.badge === 'out_of_stock'
@@ -163,10 +180,14 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
               <div className="grid grid-cols-2 gap-1.5 text- text-[var(--fg)]">
                 <div>✔ {isEn ? '2 Color Tubes (50ml)' : '٢ تيوب صبغة ٥٠ مل'}</div>
                 <div>✔ {isEn ? '2 Oxidants (50ml)' : '٢ أوكسجين ٥٠ مل'}</div>
-                <div className="col-span-2">✔ {isEn ? 'Post-Color Conditioning Balm' : 'بلسم العناية بعد الصبغة'}</div>
+                <div className="col-span-2">
+                  ✔ {isEn ? 'Post-Color Conditioning Balm' : 'بلسم العناية بعد الصبغة'}
+                </div>
               </div>
               <div className="text- text-emerald-400 pt-1 border-t border-[var(--line)] font-medium">
-                {isEn ? '✨ Buy 4 boxes and get FREE delivery anywhere in Jordan!' : '✨ عرض ٤ حبات مع توصيل مجاني لجميع المحافظات!'}
+                {isEn
+                  ? '✨ Buy 4 boxes and get FREE delivery anywhere in Jordan!'
+                  : '✨ عرض ٤ حبات مع توصيل مجاني لجميع المحافظات!'}
               </div>
             </div>
 
@@ -192,7 +213,9 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
               <button
                 onClick={() => onToggleFavorite(shade.id)}
                 className={`h-9 px-3 rounded-lg border border-[var(--line)] flex items-center justify-center gap-1.5 transition-colors ${
-                  isFavorite ? 'text-red-500 border-red-500/50 bg-red-500/10' : 'text-[var(--mute)] hover:text-[var(--fg)]'
+                  isFavorite
+                    ? 'text-red-500 border-red-500/50 bg-red-500/10'
+                    : 'text-[var(--mute)] hover:text-[var(--fg)]'
                 }`}
               >
                 <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
@@ -202,7 +225,9 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
               <button
                 onClick={() => onToggleCompare(shade.id)}
                 className={`h-9 px-3 rounded-lg border border-[var(--line)] flex items-center justify-center gap-1.5 transition-colors ${
-                  isCompared ? 'text-[var(--gold)] border-[var(--gold)] bg-[var(--gold)]/10' : 'text-[var(--mute)] hover:text-[var(--fg)]'
+                  isCompared
+                    ? 'text-[var(--gold)] border-[var(--gold)] bg-[var(--gold)]/10'
+                    : 'text-[var(--mute)] hover:text-[var(--fg)]'
                 }`}
               >
                 <ArrowLeftRight className="w-3.5 h-3.5" />
@@ -221,13 +246,17 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
                 onClick={handleCopyLink}
                 className="h-9 px-3 rounded-lg border border-[var(--line)] text-[var(--mute)] hover:text-[var(--fg)] flex items-center justify-center gap-1.5 transition-colors"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5" />
+                )}
                 <span>{copied ? (isEn ? 'Copied!' : 'تم النسخ') : t.modal.copyLink}</span>
               </button>
             </div>
           </div>
 
-          {/* Similar Shades Row - NEW with images */}
+          {/* Similar Shades Row */}
           {similarShades.length > 0 && (
             <div className="pt-6 mt-6 border-t border-[var(--line)]">
               <div className="text- text-[var(--mute)] mb-2.5">
@@ -244,9 +273,16 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
                     aria-label={isEn ? sim.nameEn : sim.nameAr}
                   >
                     {sim.image ? (
-                      <img src={sim.image} alt={isEn ? sim.nameEn : sim.nameAr} className="absolute inset-0 w-full h-full object-cover" />
+                      <img
+                        src={sim.image}
+                        alt={isEn ? sim.nameEn : sim.nameAr}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                     ) : null}
-                    <span className="relative z-10 text- font-bold text-white drop-shadow" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+                    <span
+                      className="relative z-10 text- font-bold text-white drop-shadow"
+                      style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}
+                    >
                       {sim.code}
                     </span>
                   </button>

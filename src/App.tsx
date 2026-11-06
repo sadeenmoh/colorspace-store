@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+
 import {
   Shade,
   filterAndSortShades,
@@ -20,6 +21,7 @@ import { Language, Theme, TRANSLATIONS } from './utils/translations';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ShopSection } from './components/ShopSection';
+import { CatalogSection } from './components/CatalogSection';
 import { BundlesSection } from './components/BundlesSection';
 import { PerksCareSection } from './components/PerksCareSection';
 import { IngredientsSection } from './components/IngredientsSection';
@@ -39,20 +41,16 @@ import { AdminDashboard } from './components/admin/AdminDashboard';
 import { WishlistDrawer } from './components/WishlistDrawer';
 
 export default function App() {
-  // State: Language & Theme
   const [lang, setLang] = useState<Language>('ar');
   const [theme, setTheme] = useState<Theme>('dark');
 
-  // State: Admin Dashboard Toggle
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(() => {
     return window.location.hash === '#admin';
   });
 
-  // State: Shades & Store Settings (persisted and editable via Admin)
   const [shades, setShades] = useState<Shade[]>(() => getStoredShades());
   const [storeSettings, setStoreSettings] = useState<StoreSettings>(() => getStoredSettings());
 
-  // State: Cart & Customer
   const [cart, setCart] = useState<Record<number, number>>(() => {
     try {
       return JSON.parse(localStorage.getItem('sci-cart') || '{}');
@@ -72,7 +70,6 @@ export default function App() {
     }
   });
 
-  // State: Favorites
   const [favorites, setFavorites] = useState<Record<number, boolean>>(() => {
     try {
       return JSON.parse(localStorage.getItem('sci-fav') || '{}');
@@ -81,30 +78,25 @@ export default function App() {
     }
   });
 
-  // State: Comparison & Modals
   const [comparedIds, setComparedIds] = useState<number[]>([]);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [activeShade, setActiveShade] = useState<Shade | null>(null);
 
-  // State: Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | 'favorites'>(-1);
   const [sortBy, setSortBy] = useState<'default' | 'light_to_dark' | 'dark_to_light' | 'name'>('default');
 
-  // State: Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const t = TRANSLATIONS[lang];
 
-  // Sync Language with document element attributes
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }, [lang]);
 
-  // Sync Theme with document element attributes
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     if (theme === 'dark') {
@@ -116,28 +108,24 @@ export default function App() {
     }
   }, [theme]);
 
-  // Persist Cart
   useEffect(() => {
     try {
       localStorage.setItem('sci-cart', JSON.stringify(cart));
     } catch {}
   }, [cart]);
 
-  // Persist Customer
   useEffect(() => {
     try {
       localStorage.setItem('sci-customer', JSON.stringify(customer));
     } catch {}
   }, [customer]);
 
-  // Persist Favorites
   useEffect(() => {
     try {
       localStorage.setItem('sci-fav', JSON.stringify(favorites));
     } catch {}
   }, [favorites]);
 
-  // Toast Helper
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
@@ -145,19 +133,16 @@ export default function App() {
     }, 2400);
   };
 
-  // Record traffic visit on page load
   useEffect(() => {
     recordCurrentVisit();
   }, []);
 
-  // Initialize Meta Pixel when configured
   useEffect(() => {
     if (storeSettings.metaPixelId) {
       initMetaPixel(storeSettings.metaPixelId);
     }
   }, [storeSettings.metaPixelId]);
 
-  // Track ViewContent on shade details modal
   useEffect(() => {
     if (activeShade) {
       trackMetaPixelEvent('ViewContent', {
@@ -169,7 +154,6 @@ export default function App() {
     }
   }, [activeShade]);
 
-  // URL Hash Navigation for direct shade link or admin
   useEffect(() => {
     const handleHash = () => {
       if (window.location.hash === '#admin') {
@@ -190,7 +174,6 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, [shades]);
 
-  // Cart operations
   const handleAddToCart = (shade: Shade) => {
     if (shade.badge === 'out_of_stock') {
       showToast(lang === 'ar' ? 'هذه الدرجة غير متوفرة حالياً' : 'This shade is currently out of stock');
@@ -232,7 +215,6 @@ export default function App() {
     });
   };
 
-  // Favorites operations
   const handleToggleFavorite = (id: number) => {
     setFavorites((prev) => {
       const next = { ...prev };
@@ -281,7 +263,6 @@ export default function App() {
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
 
-  // Comparison operations
   const handleToggleCompare = (id: number) => {
     setComparedIds((prev) => {
       if (prev.includes(id)) {
@@ -294,7 +275,6 @@ export default function App() {
     });
   };
 
-  // Filtered & sorted shades
   const displayedShades = useMemo(() => {
     return filterAndSortShades(
       shades,
@@ -310,7 +290,6 @@ export default function App() {
     return calculateOrder(cart, customer.city);
   }, [cart, customer.city]);
 
-  // When admin view is active, render the full admin dashboard
   if (isAdminOpen) {
     return (
       <AdminDashboard
@@ -336,12 +315,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] flex flex-col selection:bg-[var(--gold)]/30 selection:text-[var(--fg)]">
-      {/* Top Promotional Announcement Bar */}
       <div className="bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text- font-semibold py-2 px-4 text-center tracking-wide">
         {announcementText}
       </div>
 
-      {/* Main Navbar */}
       <Navbar
         lang={lang}
         onToggleLang={() => setLang((prev) => (prev === 'ar' ? 'en' : 'ar'))}
@@ -353,10 +330,8 @@ export default function App() {
         onOpenWishlist={() => setIsWishlistOpen(true)}
       />
 
-      {/* Hero Section */}
       <Hero lang={lang} />
 
-      {/* Shades Collection Grid */}
       <ShopSection
         shades={displayedShades}
         lang={lang}
@@ -375,6 +350,9 @@ export default function App() {
         onAddAllFavoritesToCart={handleAddAllFavoritesToCart}
         onShareFavoritesWhatsApp={handleShareFavoritesWhatsApp}
       />
+
+      {/* Catalog */}
+      <CatalogSection lang={lang} />
 
       {/* Bundles & Deals */}
       <BundlesSection lang={lang} />
@@ -403,7 +381,6 @@ export default function App() {
       {/* Footer */}
       <Footer lang={lang} onOpenAdmin={() => setIsAdminOpen(true)} />
 
-      {/* Shade Detail Modal */}
       <ShadeModal
         shade={activeShade}
         onClose={() => setActiveShade(null)}
@@ -417,7 +394,6 @@ export default function App() {
         onShowToast={showToast}
       />
 
-      {/* Comparison Modal */}
       <CompareModal
         isOpen={isCompareOpen}
         onClose={() => setIsCompareOpen(false)}
@@ -426,7 +402,6 @@ export default function App() {
         onAddToCart={handleAddToCart}
       />
 
-      {/* Floating Comparison Bottom Tray */}
       <CompareTray
         comparedIds={comparedIds}
         onOpenModal={() => setIsCompareOpen(true)}
@@ -434,7 +409,6 @@ export default function App() {
         lang={lang}
       />
 
-      {/* Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -446,7 +420,6 @@ export default function App() {
         lang={lang}
       />
 
-      {/* Wishlist Drawer */}
       <WishlistDrawer
         isOpen={isWishlistOpen}
         onClose={() => setIsWishlistOpen(false)}
@@ -458,7 +431,6 @@ export default function App() {
         lang={lang}
       />
 
-      {/* Mobile Sticky Bottom Checkout Bar */}
       <MobileBottomBar
         totalItems={orderCalc.totalItems}
         grandTotal={orderCalc.grandTotal}
@@ -466,10 +438,8 @@ export default function App() {
         lang={lang}
       />
 
-      {/* Floating WhatsApp Action Button */}
       <FloatingWhatsApp lang={lang} />
 
-      {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 start-1/2 -translate-x-1/2 z-50 bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
           {toastMessage}

@@ -3,10 +3,12 @@ export type Theme = 'dark' | 'light';
 
 export const TRANSLATIONS = {
   ar: {
+    
     brandName: 'SPACE INFINITY',
     brandSubtitle: 'صبغة الشعر التركية الفاخرة',
     topBarNotice: 'عرض خاص: صبغة تركية بـ ٢.٥ دينار فقط · اشتري ٤ حبات واحصلي على توصيل مجاني لكافة المناطق!',
     nav: {
+      catalog: 'الكتالوج',
       shades: 'الدرجات',
       bundles: 'العروض',
       videos: 'فيديوهات وتجارب',
@@ -17,6 +19,13 @@ export const TRANSLATIONS = {
       stores: 'نقاط البيع',
       contact: 'تواصل',
     },
+    catalog: {
+  eyebrow: 'كتالوج الدرجات',
+  title: 'تصفحي الكتالوج كاملاً',
+  subtitle: 'جميع الدرجات مرتبة بنفس ترتيب الكتالوج الأصلي.',
+  open: 'فتح بالحجم الكامل',
+  download: 'تحميل',
+},
     hero: {
       eyebrow: 'صبغة تركية 🇹🇷 · قليلة الأمونيا · غنية بالزيوت الطبيعية',
       title1: 'لون غني ولمعان استثنائي.',
@@ -199,6 +208,7 @@ export const TRANSLATIONS = {
     brandSubtitle: 'Luxury Turkish Hair Color',
     topBarNotice: 'Special Offer: 2.5 JOD per box · Buy 4 boxes and get FREE delivery across Jordan!',
     nav: {
+      catalog: 'Catalog',
       shades: 'Shades',
       bundles: 'Offers',
       videos: 'Videos & Reels',
@@ -209,6 +219,13 @@ export const TRANSLATIONS = {
       stores: 'Where to Buy',
       contact: 'Contact',
     },
+    catalog: {
+  eyebrow: 'Shade Catalog',
+  title: 'Browse the Full Catalog',
+  subtitle: 'All shades listed in the same order as the original catalog.',
+  open: 'Open full size',
+  download: 'Download',
+},
     hero: {
       eyebrow: 'Turkish Formula 🇹🇷 · Low Ammonia · Rich Natural Oils',
       title1: 'Rich Color & Distinctive Shine.',

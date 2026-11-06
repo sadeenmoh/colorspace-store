@@ -43,10 +43,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-[var(--mute)]">
             <a
               href="#shop"
+              
               className="hover:text-[var(--fg)] transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.shades}
             </a>
+            <a href="#catalog" className="hover:text-[var(--fg)] transition-colors whitespace-nowrap shrink-0">
+  {t.nav.catalog}
+</a>
             <a
               href="#deals"
               className="hover:text-[var(--fg)] transition-colors whitespace-nowrap shrink-0"
