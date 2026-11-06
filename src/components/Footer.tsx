@@ -63,11 +63,11 @@ export const Footer: React.FC<FooterProps> = ({ lang, onOpenAdmin }) => {
 
             {/* Phone - NEW */}
             <a
-              href="tel:+962787201818"
+              href="tel:+962798883033"
               className="inline-flex items-center gap-1.5 hover:text-[var(--fg)] transition-colors"
             >
               <Phone className="w-4 h-4 text-[var(--gold)]" />
-              <span dir="ltr">0787201818</span>
+              <span dir="ltr">0798883033</span>
             </a>
 
             <button

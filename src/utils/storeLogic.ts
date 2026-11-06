@@ -62,7 +62,7 @@ export const SHADES: Shade[] = [
 
 export const BASE_PRICE = 2.5;
 export const FREE_DELIVERY_THRESHOLD = 10.0;
-export const WHATSAPP_NUMBER = '962787201818';
+export const WHATSAPP_NUMBER = '962798883033';
 
 export const BUNDLE_TIERS = [
   { minCount: 4, discountPct: 0 },
@@ -167,7 +167,6 @@ export function normalizeSearchTerm(term: string): string {
   return normalized.toLowerCase();
 }
 
-// ترتيب الكتالوج الرسمي - مش رقم الصورة
 export function getCatalogNo(s: Shade): number {
   const idx = CATALOG_ORDER.indexOf(s.code);
   return idx === -1 ? 999 + s.id : idx;
