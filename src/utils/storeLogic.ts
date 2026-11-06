@@ -28,7 +28,7 @@ export const CATEGORIES: Category[] = [
 export const CATALOG_ORDER = [
   '1.0', '3.0', '4.0', '5.0', '6.0', '7.0', '8.0',
   '10.0', '0.1', '0.2', '1.1', '7.1', '8.1', '7.11',
-  '8.11', '0.02', '3.33', '8.3', '6.7', '7.7',
+  '8.11', '0.02', '7.3', '8.3', '6.7', '7.7',
   '8.73', '8.37', '3.66', '5.65', '8.45',
 ];
 
@@ -49,7 +49,7 @@ export const SHADES: Shade[] = [
   { id: 13, code: '7.11', nameAr: 'أشقر رمادي مكثف', nameEn: 'Intense Ash Blonde', hex: '#38322E', image: '/assets/aistudio/SPACE_03_7.11.png', categoryId: 2, badge: 'best_seller', descAr: 'أشقر رمادي مكثف يمنح تغطية قوية ولمسة رمادية واضحة.', descEn: 'Intense ash blonde for strong coverage and cool tone.' },
   { id: 14, code: '8.11', nameAr: 'أشقر فاتح رمادي مكثف', nameEn: 'Intense Ash Light Blonde', hex: '#2F2A26', image: '/assets/aistudio/SPACE_20_8.11.png', categoryId: 2, badge: 'out_of_stock', descAr: 'أشقر فاتح رمادي مكثف بتركيز عالي لإطلالة رمادية نقية.', descEn: 'Intense ash light blonde for pure cool perfection.' },
   { id: 15, code: '0.02', nameAr: 'أبيض فضي', nameEn: 'Silver White', hex: '#2A2A2E', image: '/assets/aistudio/SPACE_18_0.02.png', categoryId: 2, descAr: 'أبيض فضي عصري بلمعان معدني فريد لإطلالة جريئة.', descEn: 'Modern silver white with unique metallic gleam.' },
-  { id: 16, code: '3.33', nameAr: 'قشرة البندق', nameEn: 'Nutshell', hex: '#3A2818', image: '/assets/aistudio/SPACE_02_7.3.png', categoryId: 0, descAr: 'لون قشرة البندق الدافئ، مزيج طبيعي بين البني والذهبي.', descEn: 'Warm nutshell tone blending brown and golden hues.' },
+  { id: 16, code: '7.3', nameAr: 'قشرة البندق', nameEn: 'Nutshell', hex: '#3A2818', image: '/assets/aistudio/SPACE_02_7.3.png', categoryId: 0, descAr: 'لون قشرة البندق الدافئ، مزيج طبيعي بين البني والذهبي.', descEn: 'Warm nutshell tone blending brown and golden hues.' },
   { id: 17, code: '8.3', nameAr: 'رغوة العسل', nameEn: 'Honey Foam', hex: '#7A5A33', image: '/assets/aistudio/SPACE_13_8.3.png', categoryId: 1, descAr: 'لون رغوة العسل الدافئ، إشراقة ذهبية ناعمة وطبيعية.', descEn: 'Warm honey foam with soft golden radiance.' },
   { id: 18, code: '6.7', nameAr: 'بني شوكولاتة', nameEn: 'Chocolate Coffee', hex: '#221416', image: '/assets/aistudio/SPACE_23_6.7.png', categoryId: 0, descAr: 'بني شوكولاتة داكن وفاخر بلمسة قهوة غنية وبريق جذاب.', descEn: 'Dark chocolate coffee with rich depth and glossy finish.' },
   { id: 19, code: '7.7', nameAr: 'بني لامع', nameEn: 'Shining Coffee', hex: '#2E1A12', image: '/assets/aistudio/SPACE_01_7.7.png', categoryId: 0, badge: 'new', descAr: 'بني قهوة لامع يمنح الشعر بريقاً صحياً وإشراقة واضحة.', descEn: 'Shining coffee brown for healthy glossy hair.' },
