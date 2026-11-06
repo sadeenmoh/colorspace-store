@@ -52,20 +52,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const waMessage = formatWhatsAppOrderMessage(cart, customer, calc, lang);
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 
+  // توصيل مجاني عند 4 علب - بدل رسالة الخصم
+  const FREE_DELIVERY_MIN_ITEMS = 4;
+  const neededForFreeDelivery = Math.max(0, FREE_DELIVERY_MIN_ITEMS - calc.totalItems);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true" aria-label={t.cart.title}>
-      {/* Backdrop */}
       <div
         onClick={onClose}
         className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
       />
 
-      {/* Drawer */}
       <div className="fixed inset-y-0 start-0 max-w-full flex">
         <div className="w-screen max-w-md bg-[var(--bg)] border-e border-[var(--line)] shadow-2xl flex flex-col justify-between overflow-hidden">
-          {/* Header */}
           <div className="px-6 py-5 border-b border-[var(--line)] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <ShoppingBag className="w-5 h-5 text-[var(--gold)]" />
@@ -85,9 +86,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </button>
           </div>
 
-          {/* Drawer Body */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
-            {/* Cart Items List */}
             {cartEntries.length === 0 ? (
               <div className="text-center py-16 text-[var(--mute)]">
                 <ShoppingBag className="w-12 h-12 mx-auto stroke-1 text-[var(--mute)]/50 mb-3" />
@@ -102,7 +101,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                   return (
                     <div key={shade.id} className="pt-3 first:pt-0 flex items-center gap-3.5">
-                      {/* Swatch */}
                       <div
                         className="w-12 h-12 rounded-lg border border-white/20 shrink-0 shadow-sm flex items-end justify-start p-1"
                         style={{ backgroundColor: shade.hex }}
@@ -112,7 +110,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </span>
                       </div>
 
-                      {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="text-[11px] text-[var(--mute)]">
                           {t.shop.shadeLabel} {shade.code}
@@ -125,7 +122,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </div>
                       </div>
 
-                      {/* Stepper */}
                       <div className="flex items-center border border-[var(--line)] rounded-lg bg-[var(--bg2)]">
                         <button
                           onClick={() => onUpdateQty(shade.id, -1)}
@@ -146,7 +142,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </button>
                       </div>
 
-                      {/* Remove */}
                       <button
                         onClick={() => onRemoveItem(shade.id)}
                         className="w-8 h-8 rounded-lg inline-flex items-center justify-center text-[var(--mute)] hover:text-red-500 transition-colors"
@@ -160,37 +155,31 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
             )}
 
-            {/* Incentives Banners */}
+            {/* Incentives Banners - توصيل مجاني بدل الخصم */}
             {cartEntries.length > 0 && (
               <div className="space-y-2">
-                {/* Next bundle tier hint */}
-                {calc.nextTier && (
-                  <div className="p-3 rounded-lg bg-[var(--gold)]/10 border border-[var(--gold)]/20 text-xs text-[var(--gold)] flex items-center gap-2">
-                    <Gift className="w-4 h-4 shrink-0" />
-                    <span>
-                      {t.cart.nextTierPrompt
-                        .replace('{needed}', String(calc.nextTier.needed))
-                        .replace('{pct}', String(calc.nextTier.discountPct))}
-                    </span>
-                  </div>
-                )}
-
-                {/* Free shipping hint */}
-                {!calc.isShippingFree && customer.city && (
+                {neededForFreeDelivery > 0 ? (
                   <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400 flex items-center gap-2">
                     <Truck className="w-4 h-4 shrink-0" />
                     <span>
-                      {t.cart.freeShippingPrompt.replace(
-                        '{amount}',
-                        calc.amountUntilFreeShipping.toFixed(2)
-                      )}
+                      {isEn
+                        ? `Add ${neededForFreeDelivery} more box${neededForFreeDelivery > 1 ? 'es' : ''} to get FREE delivery!`
+                        : `أضيفي ${neededForFreeDelivery} علبة إضافية للحصول على توصيل مجاني!`}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400 flex items-center gap-2">
+                    <Truck className="w-4 h-4 shrink-0" />
+                    <span>
+                      {isEn
+                        ? `You got FREE delivery!`
+                        : `حصلتي على توصيل مجاني!`}
                     </span>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Customer Delivery Details Form */}
             {cartEntries.length > 0 && (
               <div className="pt-2 border-t border-[var(--line)] space-y-3">
                 <div className="text-xs uppercase tracking-wider text-[var(--gold)] font-medium">
@@ -260,7 +249,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             )}
           </div>
 
-          {/* Footer Totals & WhatsApp CTA */}
           {cartEntries.length > 0 && (
             <div className="p-6 border-t border-[var(--line)] bg-[var(--bg2)]/60 space-y-3">
               <div className="space-y-1.5 text-xs text-[var(--mute)]">
