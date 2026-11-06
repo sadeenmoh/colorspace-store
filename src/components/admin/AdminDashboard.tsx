@@ -107,7 +107,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Passcode Verification (default space2026)
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode.trim() === 'space2026' || passcode.trim() === 'admin') {
+if (passcode.trim() === '85186') {
       setIsAuthenticated(true);
       sessionStorage.setItem('sci-admin-auth', 'true');
       setPasscodeError(false);
@@ -323,15 +323,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               {passcodeError && (
                 <p className="text-xs text-red-500 mt-1.5">
-                  {isEn ? 'Incorrect passcode. Try space2026' : 'كلمة المرور غير صحيحة. جرّبي space2026'}
+                  {isEn ? 'Incorrect passcode.' : 'كلمة المرور غير صحيحة.'}
                 </p>
               )}
             </div>
 
-            <div className="p-3 rounded-lg bg-[var(--bg)] border border-[var(--line)] text-[11px] text-[var(--mute)]">
-              <span>{isEn ? 'Default passcode: ' : 'كلمة المرور الافتراضية: '}</span>
-              <code className="text-[var(--gold)] font-bold">space2026</code>
-            </div>
+         
 
             <button
               type="submit"
