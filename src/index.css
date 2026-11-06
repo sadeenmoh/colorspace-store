@@ -25,9 +25,12 @@
   --on-gold: #FFFFFF;
 }
 
+/* ===== إصلاح عرض الموبايل - يمنع أي عنصر يطلع برا الشاشة ===== */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -35,6 +38,23 @@ body {
   color: var(--fg);
   font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 .font-serif-luxury {
@@ -78,27 +98,13 @@ body {
 }
 
 @keyframes floatGentle {
-  0%, 100% {
-    transform: rotate(-3deg) translateY(0px);
-  }
-  50% {
-    transform: rotate(-1deg) translateY(-10px);
-  }
+  0%, 100% { transform: rotate(-3deg) translateY(0px); }
+  50% { transform: rotate(-1deg) translateY(-10px); }
 }
-
-.animate-float {
-  animation: floatGentle 6s ease-in-out infinite;
-}
+.animate-float { animation: floatGentle 6s ease-in-out infinite; }
 
 @keyframes waveSway {
-  0% {
-    transform: translateY(0px) scaleY(1);
-  }
-  100% {
-    transform: translateY(20px) scaleY(1.08);
-  }
+  0% { transform: translateY(0px) scaleY(1); }
+  100% { transform: translateY(20px) scaleY(1.08); }
 }
-
-.animate-wave {
-  animation: waveSway 12s ease-in-out infinite alternate;
-}
+.animate-wave { animation: waveSway 12s ease-in-out infinite alternate; }
