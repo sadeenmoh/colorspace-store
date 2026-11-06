@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, ArrowLeftRight, Share2, Copy, Check, ShoppingBag } from 'lucide-react';
+import { X, Heart, ArrowLeftRight, Share2, Copy, Check, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Shade, CATEGORIES, BASE_PRICE, SHADES } from '../utils/storeLogic';
 import { Language, TRANSLATIONS } from '../utils/translations';
 
@@ -82,10 +82,20 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
 
       {/* Modal Dialog */}
       <div className="relative w-full max-w-3xl rounded-2xl bg-[var(--bg)] border border-[var(--line)] shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 z-10 my-4 sm:my-0">
-        {/* Close Button */}
+        {/* سهم رجوع */}
         <button
           onClick={onClose}
-          className="absolute top-3 start-3 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors"
+          className="absolute top-3 start-3 z-20 h-9 px-3 rounded-full bg-black/60 text-white flex items-center justify-center gap-1.5 hover:bg-black/90 transition-colors backdrop-blur"
+          aria-label={isEn ? 'Back' : 'رجوع'}
+        >
+          {isEn ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+          <span className="text-xs font-bold">{isEn ? 'Back' : 'رجوع'}</span>
+        </button>
+
+        {/* زر اغلاق X */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 end-3 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors"
           aria-label={t.modal.close}
         >
           <X className="w-4 h-4" />
@@ -128,9 +138,9 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
 
           {/* Badge */}
           {shade.badge && (
-            <div className="absolute top-3 end-3 z-[3]">
+            <div className="absolute top-3 end-14 z-[3]">
               <span
-                className={`px-2.5 py-1 rounded text- font-bold tracking-wider uppercase ${
+                className={`px-2.5 py-1 rounded text-xs font-bold tracking-wider uppercase ${
                   shade.badge === 'out_of_stock'
                     ? 'bg-neutral-800 text-neutral-300'
                     : shade.badge === 'best_seller'
@@ -163,7 +173,7 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
               <span className="font-mono text-2xl font-bold text-[var(--gold)]">
                 {BASE_PRICE.toFixed(2)} {currency}
               </span>
-              <span className="text- px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20">
                 {isEn ? 'Turkish Formula 🇹🇷' : 'صناعة تركية 🇹🇷'}
               </span>
             </div>
@@ -174,17 +184,17 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
 
             {/* Box Contents Breakdown */}
             <div className="p-3 rounded-xl bg-[var(--bg)] border border-[var(--line)] mb-4 text-xs space-y-1.5">
-              <div className="text- font-bold text-[var(--gold)]">
+              <div className="text-sm font-bold text-[var(--gold)]">
                 {isEn ? 'Full Kit in Each Box (2.5 JOD):' : 'محتويات العلبة الواحدة (٢.٥ د.أ):'}
               </div>
-              <div className="grid grid-cols-2 gap-1.5 text- text-[var(--fg)]">
+              <div className="grid grid-cols-2 gap-1.5 text-xs text-[var(--fg)]">
                 <div>✔ {isEn ? '2 Color Tubes (50ml)' : '٢ تيوب صبغة ٥٠ مل'}</div>
                 <div>✔ {isEn ? '2 Oxidants (50ml)' : '٢ أوكسجين ٥٠ مل'}</div>
                 <div className="col-span-2">
                   ✔ {isEn ? 'Post-Color Conditioning Balm' : 'بلسم العناية بعد الصبغة'}
                 </div>
               </div>
-              <div className="text- text-emerald-400 pt-1 border-t border-[var(--line)] font-medium">
+              <div className="text-xs text-emerald-400 pt-1 border-t border-[var(--line)] font-medium">
                 {isEn
                   ? '✨ Buy 4 boxes and get FREE delivery anywhere in Jordan!'
                   : '✨ عرض ٤ حبات مع توصيل مجاني لجميع المحافظات!'}
@@ -259,7 +269,7 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
           {/* Similar Shades Row */}
           {similarShades.length > 0 && (
             <div className="pt-6 mt-6 border-t border-[var(--line)]">
-              <div className="text- text-[var(--mute)] mb-2.5">
+              <div className="text-xs text-[var(--mute)] mb-2.5">
                 {t.modal.similarShades}:
               </div>
               <div className="flex items-center gap-2">
@@ -280,7 +290,7 @@ export const ShadeModal: React.FC<ShadeModalProps> = ({
                       />
                     ) : null}
                     <span
-                      className="relative z-10 text- font-bold text-white drop-shadow"
+                      className="relative z-10 text-xs font-bold text-white drop-shadow"
                       style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}
                     >
                       {sim.code}
