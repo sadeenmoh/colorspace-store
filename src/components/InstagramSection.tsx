@@ -9,18 +9,19 @@ interface InstagramSectionProps {
 export const InstagramSection: React.FC<InstagramSectionProps> = ({ lang }) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-  // 4 فيديوهات من مجلد public/assets/aistudio
+  // 5 فيديوهات من مجلد public/assets/aistudio
   const videos = [
     { id: 1, src: '/assets/aistudio/01.mp4', tag: '#01' },
     { id: 2, src: '/assets/aistudio/02.mp4', tag: '#02' },
     { id: 3, src: '/assets/aistudio/03.mp4', tag: '#03' },
     { id: 4, src: '/assets/aistudio/04.mp4', tag: '#04' },
+    { id: 5, src: '/assets/aistudio/05.mp4', tag: '#05' },
   ];
 
   return (
     <>
       <section id="ig" className="py-20 md:py-24 bg-[var(--bg2)] border-b border-[var(--line)]">
-        <div className="max-w- mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="text-xs uppercase tracking-[0.25em] text-[var(--gold)] font-medium mb-2">
               Instagram Lookbook
@@ -35,8 +36,8 @@ export const InstagramSection: React.FC<InstagramSectionProps> = ({ lang }) => {
             </p>
           </div>
 
-          {/* 4 Videos Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+          {/* 5 Videos Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-10">
             {videos.map((video) => (
               <div
                 key={video.id}
@@ -66,7 +67,7 @@ export const InstagramSection: React.FC<InstagramSectionProps> = ({ lang }) => {
                     <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur flex items-center justify-center group-hover:bg-[var(--gold)] group-hover:text-[var(--on-gold)] transition-colors">
                       <Play className="w-3.5 h-3.5 fill-current" />
                     </span>
-                    <span className="text- text-white flex items-center gap-0.5">
+                    <span className="text-xs text-white flex items-center gap-0.5">
                       @spacecolorinfinity <ArrowUpRight className="w-3 h-3 inline" />
                     </span>
                   </div>
@@ -108,7 +109,7 @@ export const InstagramSection: React.FC<InstagramSectionProps> = ({ lang }) => {
             controls
             autoPlay
             playsInline
-            className="relative max-h- max-w-full rounded-xl shadow-2xl"
+            className="relative max-h-[85vh] max-w-full rounded-xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

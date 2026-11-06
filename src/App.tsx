@@ -322,7 +322,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] flex flex-col selection:bg-[var(--gold)]/30 selection:text-[var(--fg)]">
-      <div className="bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text- font-semibold py-2 px-4 text-center tracking-wide">
+      <div className="bg-[var(--gold)] text-[var(--on-gold)] text-xs sm:text-sm font-semibold py-2 px-4 text-center tracking-wide">
         {announcementText}
       </div>
 
@@ -359,6 +359,10 @@ export default function App() {
       />
 
       <CatalogSection lang={lang} />
+
+      {/* تابعي إطلالاتك + الفيديوهات - صار تحت الكتالوج مباشرة */}
+      <InstagramSection lang={lang} />
+
       <BundlesSection lang={lang} />
       <PerksCareSection lang={lang} />
       <IngredientsSection lang={lang} />
@@ -366,7 +370,6 @@ export default function App() {
       <HowToUseSection lang={lang} />
       <ReviewsSection lang={lang} />
       <FaqSection lang={lang} />
-      <InstagramSection lang={lang} />
 
       <Footer lang={lang} onOpenAdmin={() => setIsAdminOpen(true)} />
 
