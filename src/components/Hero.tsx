@@ -157,7 +157,7 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
 
               {/* Box image */}
               <img
-                src="/assets/aistudio/box.jpg"
+                src="/assets/aistudio/box.png"
                 alt="Space Infinity - Turkish Hair Color"
                 className="relative w-80 sm:w-96 lg:w-[30rem] h-auto max-h-[560px] object-contain rounded-xl border border-[var(--gold)]/60 shadow-2xl transition-transform duration-500 animate-float hover:scale-[1.02]"
                 loading="eager"
