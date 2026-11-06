@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Truck, Check, Package, Gift, ShieldCheck } from 'lucide-react';
+import { Sparkles, Truck, Check, Package, Gift } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../utils/translations';
 import { BASE_PRICE } from '../utils/storeLogic';
 
@@ -13,7 +13,7 @@ export const BundlesSection: React.FC<BundlesSectionProps> = ({ lang }) => {
 
   return (
     <section id="deals" className="py-20 bg-[var(--bg)] border-b border-[var(--line)]">
-      <div className="max-w- mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="text-xs uppercase tracking-[0.25em] text-[var(--gold)] font-medium mb-2">
             {t.bundles.eyebrow}
@@ -26,7 +26,7 @@ export const BundlesSection: React.FC<BundlesSectionProps> = ({ lang }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-3xl mx-auto items-stretch">
           {/* Card 1: Single Box */}
           <div className="relative rounded-2xl p-6 sm:p-8 bg-[var(--bg2)] border border-[var(--line)] flex flex-col justify-between hover:border-[var(--line)]/80 transition-colors">
             <div>
@@ -113,48 +113,6 @@ export const BundlesSection: React.FC<BundlesSectionProps> = ({ lang }) => {
             >
               <Package className="w-4 h-4" />
               <span>{isEn ? 'Select 4 Shades Now' : 'اختاري ٤ درجات واستفيدي من العرض'}</span>
-            </a>
-          </div>
-
-          {/* Card 3: Salon & Mega Bundle - 8 Boxes */}
-          <div className="relative rounded-2xl p-6 sm:p-8 bg-[var(--bg2)] border border-[var(--line)] flex flex-col justify-between hover:border-[var(--line)]/80 transition-colors">
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-[var(--mute)] mb-2">
-                {isEn ? 'Salon / Mega Pack (8 Boxes)' : 'باقة الصالونات ومحبات التجديد (٨ حبات)'}
-              </div>
-              <div className="font-latin-display text-4xl sm:text-5xl font-light text-[var(--fg)] mb-1">
-                20.00 <span className="text-sm font-sans text-[var(--gold)]">{isEn ? 'JOD' : 'د.أ'}</span>
-              </div>
-              <div className="text-xs text-emerald-400 font-semibold mb-6 flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5" />
-                <span>{isEn ? 'FREE Delivery' : 'توصيل مجاني'}</span>
-              </div>
-
-              <div className="space-y-2.5 text-xs text-[var(--fg)] mb-8 border-t border-[var(--line)] pt-4">
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>{isEn ? 'Mix & match 8 precision shades' : 'تشكيل حتى ٨ درجات مختلفة من المجموعة'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>{isEn ? '16 Color Tubes + 16 Oxidants' : '١٦ تيوب صبغة + ١٦ أوكسجين + ٨ بلسم'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>{isEn ? 'Ideal for salons and seasonal stock' : 'مثالية للصالونات والمجموعات العائلية'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-emerald-400 font-bold">
-                  <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-                  <span>{isEn ? 'Cash on Delivery Guaranteed' : 'دفع عند الاستلام مع فحص الطلب'}</span>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="#shop"
-              className="w-full h-11 rounded-lg border border-[var(--line)] hover:border-[var(--gold)] text-xs font-semibold text-[var(--fg)] flex items-center justify-center transition-colors"
-            >
-              {isEn ? 'Order 8 Boxes' : 'اختاري درجات الباقة'}
             </a>
           </div>
         </div>

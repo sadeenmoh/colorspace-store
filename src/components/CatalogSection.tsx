@@ -2,7 +2,7 @@ import React from 'react';
 import { Download, ExternalLink } from 'lucide-react';
 import { Language, TRANSLATIONS } from '../utils/translations';
 
-const CATALOG_PAGES = ['/assets/aistudio/ca.png', '/assets/aistudio/ca1.png'];
+const CATALOG_PAGES = ['/assets/aistudio/ca1.png', '/assets/aistudio/ca.png'];
 
 export const CatalogSection: React.FC<{ lang: Language }> = ({ lang }) => {
   const t = TRANSLATIONS[lang];
