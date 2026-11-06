@@ -1,0 +1,6 @@
+{
+  "name": "Space Color Infinity",
+  "description": "متجر صبغة الشعر الفاخرة Space Color Infinity - ٢٥ درجة غنية ومغذية بزيت الأرجان والكيراتين والجوجوبا مع طلب سهل عبر واتساب ومقارنة الدرجات",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

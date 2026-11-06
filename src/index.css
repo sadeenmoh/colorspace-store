@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Dark (default): deep navy, matches the logo */
+:root {
+  --bg: #0A1226;
+  --bg2: #111C3A;
+  --fg: #EEF2FB;
+  --mute: #9AA8C7;
+  --line: #22305A;
+  --gold: #8FB0F0;
+  --gold-hover: #A9C3F6;
+  --on-gold: #0A1226;
+}
+
+/* Light: white with navy, like the logo */
+:root[data-theme="light"], .light {
+  --bg: #F7F9FD;
+  --bg2: #FFFFFF;
+  --fg: #0B1F4B;
+  --mute: #5B6B8C;
+  --line: #DCE3F0;
+  --gold: #14306B;
+  --gold-hover: #0D2250;
+  --on-gold: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-serif-luxury {
+  font-family: 'Amiri', serif;
+}
+
+.font-latin-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Hair shine swatch hover effect */
+.hair-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+.hair-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 9px);
+  pointer-events: none;
+}
+
+.hair-tile::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  left: -70%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hair-card:hover .hair-tile::before {
+  left: 140%;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: rotate(-3deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-1deg) translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+@keyframes waveSway {
+  0% {
+    transform: translateY(0px) scaleY(1);
+  }
+  100% {
+    transform: translateY(20px) scaleY(1.08);
+  }
+}
+
+.animate-wave {
+  animation: waveSway 12s ease-in-out infinite alternate;
+}
