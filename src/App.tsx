@@ -49,12 +49,27 @@ export default function App() {
     return window.location.hash === '#admin';
   });
 
-  const [shades, setShades] = useState<Shade[]>(() => getStoredShades());
-  const [storeSettings, setStoreSettings] = useState<StoreSettings>(() => getStoredSettings());
+  // تم التعديل: حماية من الشاشة البيضا اذا localStorage خربان
+  const [shades, setShades] = useState<Shade[]>(() => {
+    try {
+      const s = getStoredShades();
+      return Array.isArray(s) ? s : [];
+    } catch {
+      return [];
+    }
+  });
+  const [storeSettings, setStoreSettings] = useState<StoreSettings>(() => {
+    try {
+      return getStoredSettings();
+    } catch {
+      return {} as StoreSettings;
+    }
+  });
 
   const [cart, setCart] = useState<Record<number, number>>(() => {
     try {
-      return JSON.parse(localStorage.getItem('sci-cart') || '{}');
+      const parsed = JSON.parse(localStorage.getItem('sci-cart') || '{}');
+      return parsed && typeof parsed === 'object' ? parsed : {};
     } catch {
       return {};
     }
@@ -73,7 +88,8 @@ export default function App() {
 
   const [favorites, setFavorites] = useState<Record<number, boolean>>(() => {
     try {
-      return JSON.parse(localStorage.getItem('sci-fav') || '{}');
+      const parsed = JSON.parse(localStorage.getItem('sci-fav') || '{}');
+      return parsed && typeof parsed === 'object' ? parsed : {};
     } catch {
       return {};
     }
@@ -91,7 +107,7 @@ export default function App() {
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const t = TRANSLATIONS[lang];
+  const t = TRANSLATIONS[lang] || TRANSLATIONS['ar'];
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -135,23 +151,27 @@ export default function App() {
   };
 
   useEffect(() => {
-    recordCurrentVisit();
+    try { recordCurrentVisit(); } catch {}
   }, []);
 
   useEffect(() => {
-    if (storeSettings.metaPixelId) {
-      initMetaPixel(storeSettings.metaPixelId);
-    }
-  }, [storeSettings.metaPixelId]);
+    try {
+      if (storeSettings?.metaPixelId) {
+        initMetaPixel(storeSettings.metaPixelId);
+      }
+    } catch {}
+  }, [storeSettings?.metaPixelId]);
 
   useEffect(() => {
     if (activeShade) {
-      trackMetaPixelEvent('ViewContent', {
-        content_name: activeShade.nameEn,
-        content_ids: [activeShade.code],
-        value: 5.0,
-        currency: 'JOD',
-      });
+      try {
+        trackMetaPixelEvent('ViewContent', {
+          content_name: activeShade.nameEn,
+          content_ids: [activeShade.code],
+          value: 5.0,
+          currency: 'JOD',
+        });
+      } catch {}
     }
   }, [activeShade]);
 
@@ -176,6 +196,7 @@ export default function App() {
   }, [shades]);
 
   const handleAddToCart = (shade: Shade) => {
+    if (!shade) return;
     if (shade.badge === 'out_of_stock') {
       showToast(lang === 'ar' ? 'هذه الدرجة غير متوفرة حالياً' : 'This shade is currently out of stock');
       return;
@@ -184,12 +205,14 @@ export default function App() {
       ...prev,
       [shade.id]: (prev[shade.id] || 0) + 1,
     }));
-    trackMetaPixelEvent('AddToCart', {
-      content_name: shade.nameEn,
-      content_ids: [shade.code],
-      value: 5.0,
-      currency: 'JOD',
-    });
+    try {
+      trackMetaPixelEvent('AddToCart', {
+        content_name: shade.nameEn,
+        content_ids: [shade.code],
+        value: 5.0,
+        currency: 'JOD',
+      });
+    } catch {}
     const name = lang === 'en' ? shade.nameEn : shade.nameAr;
     showToast(lang === 'ar' ? `أضيفت ${name} إلى السلة` : `Added ${name} to cart`);
   };
@@ -222,6 +245,7 @@ export default function App() {
     });
   };
 
+  // تم التعديل: shades.find بدل shades[id]
   const handleToggleFavorite = (id: number) => {
     setFavorites((prev) => {
       const next = { ...prev };
@@ -229,27 +253,31 @@ export default function App() {
         delete next[id];
       } else {
         next[id] = true;
-        const s = shades[id];
+        const s = shades.find((sh) => sh.id === id);
         if (s) {
-          trackMetaPixelEvent('AddToWishlist', {
-            content_name: s.nameEn,
-            content_ids: [s.code],
-            value: 5.0,
-            currency: 'JOD',
-          });
+          try {
+            trackMetaPixelEvent('AddToWishlist', {
+              content_name: s.nameEn,
+              content_ids: [s.code],
+              value: 5.0,
+              currency: 'JOD',
+            });
+          } catch {}
         }
       }
       return next;
     });
   };
 
+  // تم التعديل: shades.find بدل shades[id]
   const handleAddAllFavoritesToCart = () => {
     const favIds = Object.keys(favorites).map(Number);
     if (favIds.length === 0) return;
     setCart((prev) => {
       const next = { ...prev };
       favIds.forEach((id) => {
-        if (shades[id] && shades[id].badge !== 'out_of_stock') {
+        const shade = shades.find((sh) => sh.id === id);
+        if (shade && shade.badge !== 'out_of_stock') {
           next[id] = (next[id] || 0) + 1;
         }
       });
@@ -258,14 +286,19 @@ export default function App() {
     showToast(lang === 'ar' ? 'تمت إضافة جميع الدرجات المفضلة للسلة' : 'All favorite shades added to cart');
   };
 
+  // تم التعديل: حماية كاملة من undefined
   const handleShareFavoritesWhatsApp = () => {
     const favIds = Object.keys(favorites).map(Number);
     if (favIds.length === 0) return;
-    const lines = favIds.map((id) => {
-      const s = shades[id];
-      const name = lang === 'en' ? s.nameEn : s.nameAr;
-      return `• ${s.code} ${name}`;
-    });
+    const lines = favIds
+      .map((id) => {
+        const s = shades.find((sh) => sh.id === id);
+        if (!s) return null;
+        const name = lang === 'en' ? s.nameEn : s.nameAr;
+        return `• ${s.code} ${name}`;
+      })
+      .filter(Boolean);
+    if (lines.length === 0) return;
     const message = `${lang === 'ar' ? 'قائمتي المفضلة من صبغة Space Color Infinity:' : 'My favorite shades from Space Color Infinity:'}\n${lines.join('\n')}\n${window.location.origin}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
   };
@@ -283,18 +316,26 @@ export default function App() {
   };
 
   const displayedShades = useMemo(() => {
-    return filterAndSortShades(
-      shades,
-      searchQuery,
-      selectedCategory,
-      sortBy,
-      favorites,
-      lang
-    );
+    try {
+      return filterAndSortShades(
+        shades,
+        searchQuery,
+        selectedCategory,
+        sortBy,
+        favorites,
+        lang
+      );
+    } catch {
+      return shades || [];
+    }
   }, [shades, searchQuery, selectedCategory, sortBy, favorites, lang]);
 
   const orderCalc = useMemo(() => {
-    return calculateOrder(cart, customer.city);
+    try {
+      return calculateOrder(cart, customer.city);
+    } catch {
+      return { totalItems: 0, grandTotal: 0 } as any;
+    }
   }, [cart, customer.city]);
 
   if (isAdminOpen) {
@@ -317,8 +358,8 @@ export default function App() {
   }
 
   const announcementText = lang === 'en'
-    ? storeSettings.announcementNoticeEn || t.topBarNotice
-    : storeSettings.announcementNoticeAr || t.topBarNotice;
+    ? storeSettings?.announcementNoticeEn || t.topBarNotice
+    : storeSettings?.announcementNoticeAr || t.topBarNotice;
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] flex flex-col selection:bg-[var(--gold)]/30 selection:text-[var(--fg)]">

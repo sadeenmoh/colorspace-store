@@ -37,7 +37,7 @@ const DEFAULT_SETTINGS: StoreSettings = {
   metaPixelId: '',
 };
 
-// Seed demo orders for realistic admin view
+// Seed demo orders - تم تصحيح الأكواد لتطابق SHADES الحقيقي
 const SEED_ORDERS: AdminOrder[] = [
   {
     id: 'ORD-1082',
@@ -48,13 +48,13 @@ const SEED_ORDERS: AdminOrder[] = [
     customerAddress: 'دابوق، شارع الملك عبد الله الثاني، عمارة 12',
     customerNotes: 'يرجى الاتصال قبل الوصول بنصف ساعة',
     items: [
-      { shadeId: 3, code: '04', nameAr: 'بني غامق', nameEn: 'Dark Brown', qty: 2, price: 2.5 },
-      { shadeId: 12, code: '13', nameAr: 'أشقر', nameEn: 'Blonde', qty: 2, price: 2.5 },
+      { shadeId: 1, code: '3.0', nameAr: 'بني غامق', nameEn: 'Dark Brown', qty: 2, price: 2.5 },
+      { shadeId: 5, code: '7.0', nameAr: 'أشقر', nameEn: 'Blonde', qty: 2, price: 2.5 },
     ],
     subtotal: 10.0,
     discountPct: 0,
     discountAmount: 0,
-    shippingFee: 0.0, // Free delivery on 4 items
+    shippingFee: 0.0,
     grandTotal: 10.0,
     status: 'new',
   },
@@ -67,7 +67,7 @@ const SEED_ORDERS: AdminOrder[] = [
     customerAddress: 'شارع الجامعة، مجمع الأمل',
     customerNotes: '',
     items: [
-      { shadeId: 9, code: '10', nameAr: 'كراميل', nameEn: 'Caramel', qty: 2, price: 2.5 },
+      { shadeId: 20, code: '8.73', nameAr: 'كراميل', nameEn: 'Caramel', qty: 2, price: 2.5 },
     ],
     subtotal: 5.0,
     discountPct: 0,
@@ -85,33 +85,73 @@ const SEED_ORDERS: AdminOrder[] = [
     customerAddress: 'الزرقاء الجديدة، شارع 36',
     customerNotes: 'تغليف مميز لو سمحتم',
     items: [
-      { shadeId: 18, code: '19', nameAr: 'نحاسي', nameEn: 'Copper', qty: 4, price: 2.5 },
+      { shadeId: 24, code: '8.45', nameAr: 'نحاسي قرفة', nameEn: 'Cinnamon Copper', qty: 4, price: 2.5 },
     ],
     subtotal: 10.0,
     discountPct: 0,
     discountAmount: 0,
-    shippingFee: 0.0, // Free delivery on 4 items
+    shippingFee: 0.0,
     grandTotal: 10.0,
     status: 'delivered',
   },
 ];
+
+// تنظيف وتأمين أي لون جاي من localStorage - هاي بتمنع الشاشة البيضا
+function sanitizeShade(s: any, fallback?: Shade): Shade | null {
+  if (!s || typeof s !== 'object') return null;
+  const base = fallback || SHADES.find((x) => x.id === s.id) || SHADES[0];
+  if (!base) return null;
+  return {
+    id: typeof s.id === 'number' ? s.id : base.id,
+    code: typeof s.code === 'string' && s.code ? s.code : base.code,
+    nameAr: typeof s.nameAr === 'string' && s.nameAr ? s.nameAr : base.nameAr,
+    nameEn: typeof s.nameEn === 'string' && s.nameEn ? s.nameEn : base.nameEn,
+    hex: typeof s.hex === 'string' && s.hex ? s.hex : base.hex,
+    image: typeof s.image === 'string' ? s.image : base.image,
+    categoryId: typeof s.categoryId === 'number' ? s.categoryId : base.categoryId,
+    badge: s.badge,
+    descAr: typeof s.descAr === 'string' ? s.descAr : base.descAr,
+    descEn: typeof s.descEn === 'string' ? s.descEn : base.descEn,
+  };
+}
 
 export function getStoredShades(): Shade[] {
   try {
     const raw = localStorage.getItem('sci-admin-shades');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length === SHADES.length) {
-        return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const cleaned = parsed
+          .map((s: any) => sanitizeShade(s))
+          .filter(Boolean) as Shade[];
+
+        // اذا كل الألوان خربانة، ارجع للأساسي
+        if (cleaned.length > 0) {
+          // دمج: اذا الأدمن حذف لون بالغلط، لا ترجع لون مكرر
+          const seen = new Set<number>();
+          const unique = cleaned.filter((s) => {
+            if (seen.has(s.id)) return false;
+            seen.add(s.id);
+            return true;
+          });
+          return unique;
+        }
       }
     }
-  } catch {}
-  return SHADES;
+  } catch {
+    // اذا localStorage خربان، امسحه عشان ما يضل يضرب
+    try { localStorage.removeItem('sci-admin-shades'); } catch {}
+  }
+  // نسخة جديدة عشان ما نعدل على الأصلي بالغلط
+  return SHADES.map((s) => ({ ...s }));
 }
 
 export function saveStoredShades(shades: Shade[]): void {
   try {
-    localStorage.setItem('sci-admin-shades', JSON.stringify(shades));
+    const cleaned = (shades || [])
+      .map((s) => sanitizeShade(s))
+      .filter(Boolean);
+    localStorage.setItem('sci-admin-shades', JSON.stringify(cleaned));
   } catch {}
 }
 
@@ -120,15 +160,20 @@ export function getStoredOrders(): AdminOrder[] {
     const raw = localStorage.getItem('sci-admin-orders');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
+      if (Array.isArray(parsed)) {
+        // تأمين الطلبات: اذا طلب ناقص حقول، لا ترجعه
+        return parsed.filter((o: any) => o && o.id && Array.isArray(o.items));
+      }
     }
-  } catch {}
-  return SEED_ORDERS;
+  } catch {
+    try { localStorage.removeItem('sci-admin-orders'); } catch {}
+  }
+  return [...SEED_ORDERS];
 }
 
 export function saveStoredOrders(orders: AdminOrder[]): void {
   try {
-    localStorage.setItem('sci-admin-orders', JSON.stringify(orders));
+    localStorage.setItem('sci-admin-orders', JSON.stringify(orders || []));
   } catch {}
 }
 
@@ -137,10 +182,19 @@ export function getStoredSettings(): StoreSettings {
     const raw = localStorage.getItem('sci-admin-settings');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (parsed && parsed.whatsappNumber) return { ...DEFAULT_SETTINGS, ...parsed };
+      if (parsed && typeof parsed === 'object') {
+        return {
+          ...DEFAULT_SETTINGS,
+          ...parsed,
+          shippingRates: { ...DEFAULT_SETTINGS.shippingRates, ...(parsed.shippingRates || {}) },
+          bundleTiers: Array.isArray(parsed.bundleTiers) ? parsed.bundleTiers : DEFAULT_SETTINGS.bundleTiers,
+        };
+      }
     }
-  } catch {}
-  return DEFAULT_SETTINGS;
+  } catch {
+    try { localStorage.removeItem('sci-admin-settings'); } catch {}
+  }
+  return { ...DEFAULT_SETTINGS, shippingRates: { ...DEFAULT_SETTINGS.shippingRates }, bundleTiers: [...DEFAULT_SETTINGS.bundleTiers] };
 }
 
 export function saveStoredSettings(settings: StoreSettings): void {
@@ -153,7 +207,7 @@ export function addOrderToLog(order: Omit<AdminOrder, 'id' | 'createdAt' | 'stat
   const currentOrders = getStoredOrders();
   const newOrder: AdminOrder = {
     ...order,
-    id: `ORD-${1080 + currentOrders.length + 1}`,
+    id: `ORD-${Date.now().toString().slice(-4)}-${currentOrders.length + 1}`,
     createdAt: new Date().toISOString(),
     status: 'new',
   };
